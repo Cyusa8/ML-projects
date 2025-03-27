@@ -12,6 +12,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug Check for Changes
+        run: git status && git diff
+
       - name: Set up Git
         run: |
           git config --global user.name "github-actions[bot]"
