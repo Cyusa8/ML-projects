@@ -40,9 +40,10 @@ jobs:
           fi
 
       - name: Commit and push changes
-        if: env.changes == 'true'
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git commit -m "Auto-sync from Google Colab"
-          git push https://x-access-token:$GH_PAT@github.com/Cyusa8/ML-projects.git main
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Automated update from GitHub Actions" || echo "No changes to commit"
+          git push origin main
+
