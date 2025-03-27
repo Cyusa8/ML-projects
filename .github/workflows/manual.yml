@@ -1,0 +1,30 @@
+name: Sync Colab to GitHub
+
+on:
+  schedule:
+    - cron: "0 * * * *"  # Runs every hour (adjust as needed)
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  sync-colab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "Cyusa8"
+          git config --global user.email "ntagemma24@gmail.com"
+
+      - name: Pull latest changes from Colab
+        run: |
+          git pull origin main  # Change 'main' if using a different branch
+
+      - name: Commit and push changes
+        env:
+          GH_PAT: ${{ GH_PAT }}
+        run: |
+          git add .
+          git commit -m "Auto-sync from Google Colab"
+          git push https://x-access-token:$GH_PAT@github.com/Cyusa8/ML-projects.git main
