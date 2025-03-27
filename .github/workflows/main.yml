@@ -1,4 +1,4 @@
-
+name: Sync Colab to GitHub
 
 on:
   schedule:
@@ -21,10 +21,21 @@ jobs:
         run: |
           git pull origin main  # Change 'main' if using a different branch
 
+      - name: Check for changes
+        id: changes
+        run: |
+          git add .
+          if git diff-index --quiet HEAD; then
+            echo "No changes to commit."
+            echo "changes=false" >> $GITHUB_ENV
+          else
+            echo "changes=true" >> $GITHUB_ENV
+          fi
+
       - name: Commit and push changes
+        if: env.changes == 'true'
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git add .
           git commit -m "Auto-sync from Google Colab"
           git push https://x-access-token:$GH_PAT@github.com/Cyusa8/ML-projects.git main
