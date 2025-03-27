@@ -1,8 +1,8 @@
 name: Sync Colab to GitHub
 
 on:
-
-  
+  schedule:
+    - cron: "0 * * * *"  # Runs every hour (adjust as needed)
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
@@ -12,15 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Debug Check for Changes
-        run: |
-          git status && git diff
-
       - name: Set up Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
 
       - name: Pull latest changes from Colab
         run: |
@@ -40,10 +35,13 @@ jobs:
             echo "Changes detected."
             echo "changes=true" >> $GITHUB_ENV
           fi
-
-      - name: Commit and push changes
+      - name: Check for git remote repo
         run: |
-            git commit -m "Automated update from GitHub Actions" || echo "No changes to commit"
-            git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/Cyusa8/ML-projects.git HEAD:main
-
-
+          git remote -v
+      - name: Commit and push changes
+        if: env.changes == 'true'
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git commit -m "Auto-sync from Google Colab"
+          git push https://x-access-token:$GH_PAT@github.com/Cyusa8/ML-projects.git main
