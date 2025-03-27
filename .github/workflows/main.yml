@@ -1,4 +1,4 @@
-name: Sync Colab to GitHub
+
 
 on:
   schedule:
