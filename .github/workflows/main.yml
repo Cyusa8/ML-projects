@@ -27,4 +27,4 @@ jobs:
         run: |
           git add .
           git commit -m "Auto-sync from Google Colab"
-          git push https://x-access-token:$GH_PAT@github.com/YOUR_USERNAME/YOUR_REPOSITORY.git main
+          git push https://x-access-token:$GH_PAT@github.com/Cyusa8/ML-projects.git main
