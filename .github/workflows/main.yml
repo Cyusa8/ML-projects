@@ -24,7 +24,7 @@ jobs:
 
       - name: Pull latest changes from Colab
         run: |
-          git pull origin main  # Change 'main' if using a different branch
+          git pull Project1.ipynb main  # Change 'main' if using a different branch
 
       - name: Check for changes
         id: changes
