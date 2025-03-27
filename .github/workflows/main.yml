@@ -3,7 +3,7 @@ name: Sync Colab to GitHub
 on:
   schedule:
     - cron: "0 * * * *"  # Runs every hour (adjust as needed)
-  workflow_dispatch:  # Allows manual trigger
+  #workflow_dispatch:  # Allows manual trigger
 
 jobs:
   sync-colab:
