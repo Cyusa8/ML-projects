@@ -45,5 +45,6 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Automated update from GitHub Actions" || echo "No changes to commit"
-          git push origin main
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/Cyusa8/ML-projects.git HEAD:main
+
 
